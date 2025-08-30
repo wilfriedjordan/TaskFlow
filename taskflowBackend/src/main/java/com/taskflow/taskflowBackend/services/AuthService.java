@@ -67,12 +67,12 @@ public class AuthService {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
             userPostLogin.setToken(jwtUtils.generateToken(userDetails.getUsername()));
-            userPostLogin.setUsername(userDetails.getUsername());
-            userPostLogin.setRoles(userDetails.getAuthorities()
+            userPostLogin.getDataPostLoginDto().setUsername(userDetails.getUsername());
+            userPostLogin.getDataPostLoginDto().setRoles(userDetails.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
                     .toList());
-            userPostLogin.setEmail(user.getEmail());
+            userPostLogin.getDataPostLoginDto().setEmail(user.getEmail());
             return userPostLogin;
 
         }catch (Exception e){
